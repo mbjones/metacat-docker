@@ -1,0 +1,40 @@
+version: '2'
+
+networks:
+  mc-net:
+    driver: bridge
+
+volumes:
+  mc-pgdata:
+    driver: local
+  mc-data:
+    driver: local
+
+services:
+  metacat:
+    build: .
+    depends_on:
+      - mc-postgres
+    networks:
+      - mc-net
+    ports:
+      - '8080:8080'
+    volumes:
+      - mc-data:/var/metacat
+      - ${HOME}/tomcat/apache-tomcat-8.0.30/webapps:/usr/local/tomcat/webapps
+    environment:
+      ADMIN: ${ADMIN}
+      ADMINPASS: ${ADMINPASS}
+  mc-postgres:
+    image: postgres
+    networks:
+      - mc-net
+    ports:
+      - '5432:5432'
+    volumes:
+      - mc-pgdata:/pgdata
+    environment:
+      POSTGRES_PASSWORD: ${PGPASS}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_DB: ${PGDB}
+      PGDATA: '/pgdata'
