@@ -21,7 +21,6 @@ services:
       - '8080:8080'
     volumes:
       - mc-data:/var/metacat
-      - ${HOME}/tomcat/apache-tomcat-8.0.30/webapps:/usr/local/tomcat/webapps
     environment:
       ADMIN: ${ADMIN}
       ADMINPASS: ${ADMINPASS}
