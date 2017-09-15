@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-VER=2.7.2
+VER=2.8.4
 RELEASE="metacat-bin-${VER}.tar.gz"
 DIST="https://knb.ecoinformatics.org/software/dist"
 export PGUSER=metacat

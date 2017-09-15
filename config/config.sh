@@ -3,15 +3,15 @@
 TOMCAT=/usr/local/tomcat
 
 echo "Starting configuration script..."
-# Extract metacat and install war files
 
-if [!  -f /${TOMCAT}/webapps/metacat.war ]
-    then
-        echo "Copying metacat.war..."
-        mkdir -p /config/metacat
-        cd /config/metacat && tar xzf ../metacat*.tar.gz && cd ..
-        cp /config/metacat/*.war $TOMCAT/webapps
-fi
+# Extract metacat and install war files
+#if [ !  -f /${TOMCAT}/webapps/metacat.war ]
+#    then
+#        echo "Copying metacat.war..."
+#        mkdir -p /config/metacat
+#        cd /config/metacat && tar xzf ../metacat*.tar.gz && cd ..
+#        cp /config/metacat/*.war $TOMCAT/webapps
+#fi
 
 # Extract war files
 
