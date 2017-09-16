@@ -12,7 +12,7 @@ volumes:
 
 services:
   webapp:
-    build: .
+    image: metacat:2.8.4
     depends_on:
       - postgres
     networks:
