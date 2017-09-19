@@ -21,13 +21,14 @@ services:
       - '8080:8080'
     volumes:
       - webdata:/var/metacat
-      - ${HOME}/tomcat/apache-tomcat-8.0.30/webapps:/usr/local/tomcat/webapps
     environment:
       ADMIN: ${ADMIN}
       ADMINPASS: ${ADMINPASS}
       POSTGRES_DB: ${PGDB}
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASS}
+    links:
+      - postgres
   postgres:
     image: postgres
     networks:

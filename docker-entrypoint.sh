@@ -10,7 +10,10 @@ if [ "$1" = 'catalina.sh' ]; then
 
         # Copy password file for administrator
         mkdir -p /var/metacat/users
-        sed -e "s/{{ADMIN}}/$ADMIN/; s|{{ADMINPASS}}|$ADMINPASS|" /config/password.xml > $USER_PWFILE
+        ## Note: a bug in the Java library prevents it from reading from hashes starting with 2y like here
+        printf -v script 'import bcrypt; hpw = bcrypt.hashpw("%s", bcrypt.gensalt(12, prefix=b"2a")); print(hpw)' $ADMINPASS
+        HASHEDPW=`echo $script | python -`
+        sed -e "s/{{ADMIN}}/$ADMIN/; s|{{ADMINPASS}}|$HASHEDPW|" /config/password.xml > $USER_PWFILE
 
         # Set up metacat.properties with database configuration options
 
