@@ -19,7 +19,7 @@ $ PGUSER=metacat PGDB=metacat docker-compose -p metacat up -d
 
 # Visit http://localhost:8080/metacat/admin to configure metacat
 # Use the ADMINPASS and PGPASS as appropriate
-# Use 'metacat_postgres_1' as the name of the host in the JDBC connect string
+# Use 'postgres' as the name of the host in the JDBC connect string
 # Correct the deployLocation to remove the trailing 'metacat', so it reads '/usr/local/tomcat/webapps'
 
 # Now restart the webapp to load indexing properly
