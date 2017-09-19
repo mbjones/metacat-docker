@@ -12,6 +12,7 @@ volumes:
 
 services:
   webapp:
+    hostname: metacat
     image: metacat:2.8.4
     depends_on:
       - postgres
@@ -30,6 +31,7 @@ services:
     links:
       - postgres
   postgres:
+    hostname: postgres
     image: postgres
     networks:
       - mcnet
