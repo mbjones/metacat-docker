@@ -8,10 +8,11 @@ export PGUSER=metacat
 export PGDB=metacat 
 
 # Grab the Metacat release
-if [ !  -f "config/${RELEASE}" ]
+if [ !  -f "dist/${RELEASE}" ]
     then
-        curl "${DIST}/${RELEASE}" -o "config/${RELEASE}"
+        mkdir -p dist
+        curl "${DIST}/${RELEASE}" -o "dist/${RELEASE}"
 fi
 
 # Launch docker
-docker-compose -p metacat up -d --build
+#docker-compose -p metacat up -d
