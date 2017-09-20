@@ -13,7 +13,7 @@ volumes:
 services:
   proxy:
     hostname: apache
-    build: ../letsencrypt-proxy-docker
+    build: ./apache-le-proxy
     ports:
       - "80:80"
       - "443:443"
