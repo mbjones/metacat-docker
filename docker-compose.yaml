@@ -11,6 +11,26 @@ volumes:
     driver: local
 
 services:
+  proxy:
+    hostname: apache
+    build: ../letsencrypt-proxy-docker
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - webapp
+    networks:
+      - mcnet
+    environment:
+      # Set your host
+      - HOST=dev.magisa.org
+      - PORT=8080
+      # Set your email
+      - EMAIL=mbjones.89@gmail.com
+      # Turn on production mode
+      #- MODE=PRODUCTION
+    links:
+      - webapp:proxied
   webapp:
     hostname: metacat
     image: metacat:2.8.4
