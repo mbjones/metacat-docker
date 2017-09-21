@@ -4,28 +4,29 @@
 The configuration currently includes some locally hardcoded data specific to my system, which will be replaced.
 
 ## Using docker-compose
-Metacat ships with a docker-compose.yaml file that configures metacat to be run in docker containers using the default containers from docker hub for Tomcat and Postgres.  Configuration information for usernames and passwords to be used is passed through environment variables.  On a machine on which Docker is installed, Metacat can be launched and shut down using the following command:
+Metacat ships with a docker-compose.yaml file that configures metacat to be run in docker containers using the default containers from docker hub for Tomcat and Postgres.  Configuration information for usernames and passwords to be used is passed in from environment variables, which are configured in the `metacat.env` file.  You must edit that file to set proper values first, and then on a machine on which Docker is installed, Metacat can be launched and shut down using the following command:
 
 ```bash
-# build the metacat Docker image
-# This assumes the metacat 2.8.4 binary image has been unpacked in a 'dist' directory
-$ docker build -t metacat:2.8.4 .
+#########################################################
+#                                                       #
+# First, edit metacat.env to set configuration options! #
+#                                                       #
+#########################################################
 
-# Bring up metacat, with persistant state in volumes which are created if they don't yet exist
-$ export ADMIN="uid=jones,o=NCEAS,dc=ecoinformatics,dc=org"
-$ export ADMINPASS='admin-password-goes-here'
-$ export PGPASS='pg-password-goes-here'
-$ PGUSER=metacat PGDB=metacat docker-compose -p metacat up -d
+# Next, startup the Metacat webapp
+$ docker-compose -p metacat up -d
 
-# Visit http://localhost:8080/metacat/admin to configure metacat
-# Use the ADMINPASS and PGPASS as appropriate
+# Visit https://${HOST}/metacat/admin to configure metacat
+# The HOST varible and others were configured in metacat.env
+# Use the ADMINPASS and PGPASS as appropriate in the configuration fields for metacat
 # Use 'postgres' as the name of the host in the JDBC connect string
 # Correct the deployLocation to remove the trailing 'metacat', so it reads '/usr/local/tomcat/webapps'
 
 # Now restart the webapp to load indexing properly
 $ docker restart metacat_webapp_1
 
-# Now you can search the catalog via MetacatUI at http://localhost:8080/metacatui
+# Now you can search the catalog via MetacatUI at https://${HOST}/metacatui
+# By default, no data is loaded, so the catalog will be empty
 
 # When all done, bring down the metacat server containers
 $ docker-compose -p metacat down
