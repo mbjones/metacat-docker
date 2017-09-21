@@ -9,27 +9,25 @@ volumes:
     driver: local
   webdata:
     driver: local
+  lecerts:
+    driver: local
 
 services:
   proxy:
     hostname: apache
     build: ./apache-le-proxy
-    image: apache-le-proxy:0.1.0
+    image: apache-le-proxy:0.1.1
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - lecerts:/etc/letsencrypt
     depends_on:
       - webapp
     networks:
       - mcnet
-    environment:
-      # Set your host
-      - HOST=dev.magisa.org
-      - PORT=8080
-      # Set your email
-      - EMAIL=mbjones.89@gmail.com
-      # Turn on production mode
-      #- MODE=PRODUCTION
+    env_file:
+      - metacat.env
     links:
       - webapp:proxied
   webapp:
@@ -44,12 +42,8 @@ services:
       - '8080:8080'
     volumes:
       - webdata:/var/metacat
-    environment:
-      ADMIN: ${ADMIN}
-      ADMINPASS: ${ADMINPASS}
-      POSTGRES_DB: ${PGDB}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASS}
+    env_file:
+      - metacat.env
     links:
       - postgres
   postgres:
@@ -61,8 +55,7 @@ services:
       - '5432:5432'
     volumes:
       - pgdata:/pgdata
+    env_file:
+      - metacat.env
     environment:
-      POSTGRES_PASSWORD: ${PGPASS}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_DB: ${PGDB}
       PGDATA: '/pgdata'
