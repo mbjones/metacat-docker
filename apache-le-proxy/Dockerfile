@@ -22,6 +22,8 @@ RUN chmod +x /renew.sh
 EXPOSE 443
 EXPOSE 80
 
-ADD apache_config /etc/apache2/sites-available/
+ADD apache_sites /etc/apache2/sites-available/
+ADD apache_mods /etc/apache2/mods-available/
+ADD workers.properties /etc/apache2/
 
 CMD ["/usr/bin/supervisord"]

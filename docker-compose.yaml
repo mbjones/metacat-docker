@@ -16,7 +16,7 @@ services:
   proxy:
     hostname: apache
     build: ./apache-le-proxy
-    image: apache-le-proxy:0.1.1
+    image: apache-le-proxy:0.1.2
     ports:
       - "80:80"
       - "443:443"
@@ -33,13 +33,14 @@ services:
   webapp:
     hostname: metacat
     build: .
-    image: metacat:2.8.4
+    image: metacat:2.8.7
     depends_on:
       - postgres
     networks:
       - mcnet
     ports:
       - '8080:8080'
+      - '8009:8009'
     volumes:
       - webdata:/var/metacat
     env_file:
