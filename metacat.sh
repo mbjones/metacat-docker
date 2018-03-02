@@ -21,4 +21,5 @@ if [ !  -f "dist/${RELEASE}" ]
 fi
 
 # Launch docker
+docker build --build-arg METACAT_VERSION=$VERSION -t metacat:$VERSION .
 #docker-compose -p metacat up -d

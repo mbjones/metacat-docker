@@ -1,15 +1,16 @@
 FROM tomcat:8.0-jre8
 MAINTAINER Matthew B. Jones <jones@nceas.ucsb.edu>
 
+ARG METACAT_VERSION=2.8.7
+
+ADD dist/metacat-bin-${METACAT_VERSION}.tar.gz /tmp
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
         vim \
         python-bcrypt \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && cp /tmp/metacat.war /tmp/metacat-index.war /tmp/metacatui.war /usr/local/tomcat/webapps
 
-# COPY the Metacat distribution to the container
-COPY dist/metacat-2.8.4/metacat.war /usr/local/tomcat/webapps
-COPY dist/metacat-2.8.4/metacat-index.war /usr/local/tomcat/webapps
-COPY dist/metacat-2.8.4/metacatui.war /usr/local/tomcat/webapps
 
 # Add configuration data for an admin account 
 # TODO: isolate pw file out of the image
